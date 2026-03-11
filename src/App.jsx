@@ -1,36 +1,15 @@
-import React, { useEffect, useState } from "react";
-
-export default function Home() {
-  const [message, setMessage] = useState("Loading...");
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch("https://susvibebackend.vercel.app/")
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("Failed to fetch");
-        }
-        return res.text(); // because your backend sends text
-      })
-      .then((data) => {
-        setMessage(data);
-      })
-      .catch((err) => {
-        setError(err.message);
-      });
-  }, []);
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import './App.css'
+function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white">
-      <div className="p-6 rounded-xl shadow-lg text-center">
-        <h1 className="text-3xl font-bold mb-4">Backend Status</h1>
-
-        {error ? (
-          <p className="text-red-500">Error: {error}</p>
-        ) : (
-          <p className="text-lg text-gray-700">{message}</p>
-        )}
-      </div>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
+
+export default App;
